@@ -77,7 +77,7 @@
     'Get-nbConsoleServerPortTemplate', 'Get-nbDevice', 'Get-nbDevicebay',
     'Get-nbDevicebayTemplate', 'Get-nbDeviceRole', 'Get-nbDeviceType',
     'Get-nbExportTemplate', 'Get-nbGraph', 'Get-nbImageAttachment',
-    'Get-nbInterface', 'Get-nbInterfaceConnection',
+    'Get-nbInterface','Get-nbVirtualDisks', 'Get-nbInterfaceConnection',
     'Get-nbInterfaceTemplate', 'Get-nbInventoryItem', 'Get-nbIpAddress',
     'Get-nbManufacturer', 'Get-nbObject', 'Get-nbPlatform',
     'Get-nbPowerConnection', 'Get-nbPowerOutlet',
