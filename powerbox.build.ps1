@@ -125,7 +125,7 @@ task Test {#-If { $Discovery.HasTests -and $Settings.ShouldTest } {
         #OutputFile   = "TestResult.xml"
         PassThru     = $True
         #EnableExit   = $True
-        Show         = "None"
+        #Show         = "None"
         CodeCoverage = $files
     }
     if (!$ENV:APPVEYOR) {
