@@ -2351,6 +2351,47 @@ Function New-nbVMInterface {
 
 <#
 .SYNOPSIS
+    Creates a new Virtual Disk in netbox
+.DESCRIPTION
+    This should handle mapping a simple hashtable of values and looking up any references.
+.EXAMPLE
+    $lookup = @{
+        virtual_machine='virtualization/virtual_machine'
+    }
+    $VirtualDisk = @{
+        name = 'example'
+        virtual_machine = 'exampleVM'
+        size = '60'
+    }
+    New-nbVirtualDisk -lookup $lookup -object $VirtualDisk
+#>
+Function New-nbVirtualDisk {
+    Param (
+        # VMInterface to create
+        [Parameter(Mandatory = $true)]
+        $Object,
+
+        # List of custom properties
+        [Parameter()]
+        [string[]]
+        $CustomProperties,
+
+        #List of properties to lookup
+        [parameter()]
+        [hashtable]
+        $Lookup
+    )
+    $forward = @{
+        Object=$Object
+        CustomProperties=$CustomProperties
+        Lookup=$lookup
+    }
+    New-nbObject -Resource 'virtualization/virtual-disks' @forward
+}
+
+
+<#
+.SYNOPSIS
     Creates a new ConsolePort in netbox
 .DESCRIPTION
     This should handle mapping a simple hashtable of values and looking up any references.

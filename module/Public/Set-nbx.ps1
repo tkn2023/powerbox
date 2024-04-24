@@ -3005,6 +3005,63 @@ Function Set-nbDeviceRole {
 
 <#
 .SYNOPSIS
+    Sets properties on a Virtual Disk in Netbox
+.DESCRIPTION
+    This should handle mapping a simple hashtable of values and looking up any references.
+.EXAMPLE
+    $lookup = @{
+        virtual_machine='virtualization/virtual_machine'
+        status='dcim/_choices'
+    }
+    $VirtualDisk = @{
+        name = 'example'
+        size = '60'
+        virtual_machine = 'VirtualMachineName'
+        status = 'active'
+    }
+    Set-nbVirtualDisk -id 22 -lookup $lookup $VirtualDisk
+.EXAMPLE
+    Get-nbVirtualDisk| Foreach {$_.site = 'Seattle'; $_} | Set-nbVirtualDisk
+#>
+Function Set-nbVirtualDisk {
+    Param (
+        # The VirtualDisk to set
+        [Parameter(Mandatory=$true)]
+        $object,
+
+        # ID of the VirtualDisk to set
+        [Parameter()]
+        [Int]
+        $Id,
+
+        # List of custom properties
+        [Parameter()]
+        [string[]]
+        $CustomProperties,
+
+        #List of properties to lookup
+        [Parameter()]
+        [hashtable]
+        $Lookup,
+
+        #Looks up the current object and only sets changed properties
+        [Parameter()]
+        [switch]
+        $Patch
+    )
+    $Forward = @{
+        Id               = $id
+        Object           = $object
+        CustomProperties = $CustomProperties
+        Lookup           = $lookup
+        Patch            = $patch
+    }
+    Set-nbObject -Resource 'virtualization/virtual-disks' @forward
+}
+
+
+<#
+.SYNOPSIS
     Sets properties on a VMInterface in Netbox
 .DESCRIPTION
     This should handle mapping a simple hashtable of values and looking up any references.

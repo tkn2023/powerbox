@@ -1155,6 +1155,29 @@ Function Remove-nbDeviceRole {
 
 <#
 .SYNOPSIS
+    Deletes a Virtual Disk in Netbox
+.DESCRIPTION
+    Deletes a netbox Virtual Disk by ID or via the pipeline.
+.EXAMPLE
+    # Remove the VirtualDisk by id
+    Remove-nbVirtualDisk -id 1
+.EXAMPLE
+    #Remove VirtualDisk returned from a get-nbVirtualDisk
+    Get-nbVirtualDisk -search mything.contoso.com -Resource 'virtualization/virtual-disks' |
+        Remove-nbVirtualDisk -Resource 'virtualization/virtual-disks'
+#>
+Function Remove-nbVirtualDisk {
+    Param (
+        # ID of the VMInterface to delete
+        [Parameter()]
+        [Int]
+        $Id
+    )
+    Remove-nbObject -Resource 'virtualization/virtual-disks' -id $id
+}
+
+<#
+.SYNOPSIS
     Deletes a VMInterface in Netbox
 .DESCRIPTION
     Deletes a netbox VMInterface by ID or via the pipeline.
