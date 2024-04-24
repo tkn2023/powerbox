@@ -239,9 +239,9 @@ Function Get-nbVirtualDisks {
         $forward += $AdditionalParams
     }
     if ($PSCmdlet.ParameterSetName -eq 'id') {
-        $forward['Resource'] = "virtualization/virtual_disks/$id"
+        $forward['Resource'] = "virtualization/virtual-disks/$id"
     } elseif ($PSCmdlet.ParameterSetName -eq 'query') {
-        $forward['Resource'] = "virtualization/virtual_disks"
+        $forward['Resource'] = "virtualization/virtual-disks"
         $forward['Query'] = $Query
         $forward['Search'] = $search
     }

@@ -131,7 +131,7 @@ task Test {#-If { $Discovery.HasTests -and $Settings.ShouldTest } {
     if (!$ENV:APPVEYOR) {
         $PesterSettings['CodeCoverage'] = $null
         $PesterSettings['PesterOption'] = @{IncludeVSCodeMarker = $true}
-        $PesterSettings['Show'] = "Fails"
+        #$PesterSettings['Show'] = "Fails"
     }
     $Tests = (Invoke-Pester @PesterSettings)
     foreach ($test in $Tests.TestResult) {
