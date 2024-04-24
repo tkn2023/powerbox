@@ -191,6 +191,68 @@ Function Get-nbInterface {
 
 <#
 .SYNOPSIS
+    Gets virtual_disks from Netbox
+.DESCRIPTION
+    Rerieves virtual_disks objects from netbox and automatically flattens them and
+    preps them for further processing
+.EXAMPLE
+    Get-nbVirtualDisks -id 22
+.EXAMPLE
+    Get-nbVirtualDisks -query @{name='VirtualDisk'}
+.EXAMPLE
+    Get-nbVirtualDisks myVirtualDisk
+#>
+Function Get-nbVirtualDisks {
+    [CmdletBinding(DefaultParameterSetName = 'query')]
+    Param (
+        # Simple string based search
+        [Parameter(ParameterSetName = 'query', Position = 0)]
+        [String]
+        $Search,
+
+        # ID of the object to set
+        [Parameter(Mandatory = $true, ParameterSetName = 'id', Position = 0)]
+        [Int]
+        $Id,
+
+        # Query to find what you want
+        [Parameter(ParameterSetName = 'query')]
+        [HashTable]
+        $Query,
+
+        # Don't flatten the object
+        [Parameter(ParameterSetName = 'id')]
+        [Parameter(ParameterSetName = 'query')]
+        [Switch]
+        $UnFlatten,
+
+        # API Url for running without connecting
+        [Parameter(ParameterSetName = 'id')]
+        [Parameter(ParameterSetName = 'query')]
+        [uri]
+        $APIUrl
+    )
+    $forward = @{
+        UnFlatten = $UnFlatten
+    }
+    if ($AdditionalParams) {
+        $forward += $AdditionalParams
+    }
+    if ($PSCmdlet.ParameterSetName -eq 'id') {
+        $forward['Resource'] = "virtualization/virtual_disks/$id"
+    } elseif ($PSCmdlet.ParameterSetName -eq 'query') {
+        $forward['Resource'] = "virtualization/virtual_disks"
+        $forward['Query'] = $Query
+        $forward['Search'] = $search
+    }
+    if ($APIUrl) {
+        $forward['APIUrl'] = $APIUrl
+    }
+    Get-nbObject @forward
+}
+
+<#
+.SYNOPSIS
     Gets a PowerConnection from Netbox
 .DESCRIPTION
     Rerieves PowerConnection objects from netbox and automatically flattens them and
